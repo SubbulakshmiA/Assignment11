@@ -27,19 +27,6 @@ public class Calculator extends Application{
         histList.add(h);
     }
 
-//    boolean validateFun(){
-//        char[] charArr = calculatorString.toCharArray();
-//        System.out.println("charArr"+charArr.length);
-//        for(int i = 0; i<charArr.length-1; i+=2) {
-//            if (!Character.isDigit(charArr[i]) || Character.isDigit(charArr[i+1])){
-//              validated = false;
-//            }else {
-//                validated = true;
-//            }
-//        }
-//        return validated;
-//    }
-
     boolean validateFun(){
         String[] strArr = calculatorString.split("((?<=\\+)|(?=\\+)|(?<=-)|(?=-)|(?<=\\*)|(?=\\*)|(?<=/)|(?=/))");
         for(int i = 0; i<strArr.length-1; i+=2) {

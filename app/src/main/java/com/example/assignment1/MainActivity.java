@@ -13,7 +13,6 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
-//git remote set-url origin https://github.com/SubbulakshmiA/Assignment11.git
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     Calculator cals = new Calculator();
@@ -114,9 +113,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         currentText = text.getText().toString();
         if(btn != btnc && btn != btnequals && btn != btnhis){
-//            ((MyApp)getApplication()).calculatorString = currentText + btnString ;
+
             String updatedString = currentText + btnString ;
-//            text.setText(((MyApp)getApplication()).calculatorString);
             System.out.println("cals.clearPush "+cals.clearPush);
             text.setText(updatedString);
             ((MyApp)getApplication()).calculatorString = updatedString ;
