@@ -41,11 +41,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
   String displayHis = "";
     String s;
   ArrayList<String> displayList ;
+    ArrayList<String> histList ;
     boolean historyFlag = false;
+    String updatedText ="";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        updatedText = ((MyApp)getApplication()).calculatorString ;
+        historyFlag = ((MyApp)getApplication()).historyFlag ;
+        histList = ((MyApp)getApplication()).histList ;
 
         text = findViewById(R.id.text);
         histText = findViewById(R.id.text_his);
@@ -88,7 +94,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btnequals = findViewById(R.id.btnequals);
         btnequals.setOnClickListener(this);
 
-//        currentText = ((MyApp)getApplication()).calculatorString;
+        text.setText(updatedText);
+        String splus = "";
+        for (String s1 : histList) {
+            System.out.println("s in history " + s1);
+            splus += s1+"\n" ;
+            displayHis = splus  ;
+
+        }
+        histText.setText(displayHis);
 
     }
 
@@ -100,9 +114,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         currentText = text.getText().toString();
         if(btn != btnc && btn != btnequals && btn != btnhis){
-            String updatedText = currentText + btnString ;
-            text.setText(updatedText);
+//            ((MyApp)getApplication()).calculatorString = currentText + btnString ;
+            String updatedString = currentText + btnString ;
+//            text.setText(((MyApp)getApplication()).calculatorString);
             System.out.println("cals.clearPush "+cals.clearPush);
+            text.setText(updatedString);
+            ((MyApp)getApplication()).calculatorString = updatedString ;
             if(cals.clearPush){
                 text.setText(" ");
                 cals.calculatorString = cals.calculatorString.replace(cals.calculatorString,"") ;
@@ -124,10 +141,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 String res = String.valueOf(cals.calculate());
                 String updatedText = currentText  ;
                 text.setText(updatedText + "= "+res);
-                if(historyFlag){
+                ((MyApp)getApplication()).calculatorString = updatedText + "= "+res ;
+
+                if(((MyApp)getApplication()).historyFlag){
                 cals.pushHistory(updatedText + "= "+res);
+                    ((MyApp)getApplication()).histList.add(updatedText + "= "+res);
+
                     String splus = "";
-                    for (String s1 : cals.histList) {
+                    for (String s1 : ((MyApp)getApplication()).histList) {
                         System.out.println("s in history " + s1);
                         splus += s1+"\n" ;
                         displayHis = splus  ;
@@ -142,12 +163,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 Toast.makeText(MainActivity.this,"Enter single digit followed by operator",Toast.LENGTH_LONG).show();
             }
         } else if (btn == btnhis) {
-            if(!historyFlag){
-                historyFlag = true;
+            if(!((MyApp)getApplication()).historyFlag){
+                ((MyApp)getApplication()).historyFlag = true;
                 btnhis.setText(R.string.standard_no_history);
                 histText.setText(" ");
             }else{
-                historyFlag = false;
+                ((MyApp)getApplication()).historyFlag = false;
                 btnhis.setText(R.string.advance_with_history);
                 histText.setText(" ");
             }
